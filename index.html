@@ -39,6 +39,21 @@
   .stores { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
   .store { background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 10px 18px; font-weight: 700; }
   .disclosure { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--brand); border-radius: 12px; padding: 16px 18px; color: var(--dim); font-size: 15px; }
+  .offers { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 210px), 1fr)); }
+  .offer { background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
+  .offer .pic { aspect-ratio: 1; background: #fff; display: grid; place-items: center; }
+  .offer .pic img { width: 100%; height: 100%; object-fit: contain; }
+  .offer .pic .ph { font-size: 44px; }
+  .offer .body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .offer h3 { font-size: 15px; line-height: 1.35; margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .offer .old { color: var(--dim); text-decoration: line-through; font-size: 13px; }
+  .offer .price { font-size: 21px; font-weight: 900; color: var(--brand2); }
+  .offer .off { font-size: 12px; font-weight: 800; color: #fff; background: var(--wa); border-radius: 6px; padding: 1px 6px; margin-left: 6px; vertical-align: middle; }
+  .offer .coupon { font-size: 13px; color: var(--dim); }
+  .offer .coupon b { color: var(--ink); }
+  .offer .meta { font-size: 12px; color: var(--dim); margin-top: auto; }
+  .offer .buy { display: block; text-align: center; background: var(--brand); color: #fff; font-weight: 800; padding: 10px; border-radius: 10px; text-decoration: none; }
+  .updated { text-align: center; color: var(--dim); font-size: 13px; margin: -8px 0 16px; }
   footer { text-align: center; color: var(--dim); font-size: 14px; padding: 40px 16px 32px; }
 </style>
 </head>
@@ -51,6 +66,12 @@
   </header>
 
   <main>
+    <section id="ofertas" hidden>
+      <h2>Ofertas de hoje</h2>
+      <p class="updated" id="atualizado"></p>
+      <div class="offers" id="lista"></div>
+    </section>
+
     <section>
       <h2>Como funciona</h2>
       <div class="grid">
@@ -86,6 +107,44 @@
   } else {
     document.getElementById('grupo').addEventListener('click', (e) => e.preventDefault())
   }
+
+  // Ofertas de hoje: the bot adds every offer it posts in the group to ofertas.json.
+  const STORE = { amazon: 'Amazon', mercadolivre: 'Mercado Livre', shopee: 'Shopee' }
+  const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: Number.isInteger(v) ? 0 : 2 })
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e }
+  const when = (ms) => {
+    const d = new Date(ms), today = new Date().toDateString() === d.toDateString()
+    return (today ? 'hoje' : d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })) + ' às ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+  }
+  fetch('ofertas.json?' + Date.now()).then((r) => (r.ok ? r.json() : null)).then((data) => {
+    const list = (data && data.ofertas) || []
+    if (!list.length) return
+    const box = document.getElementById('lista')
+    for (const o of list.slice(0, 60)) {
+      if (!/^https:\/\/([a-z0-9-]+\.)*(amazon\.com\.br|mercadolivre\.com\.br|shopee\.com\.br|meli\.la)\//.test(o.link)) continue
+      const card = el('article', 'offer')
+      const pic = el('div', 'pic')
+      if (o.image && /^https:\/\//.test(o.image)) {
+        const img = el('img'); img.src = o.image; img.alt = ''; img.loading = 'lazy'; pic.append(img)
+      } else pic.append(el('span', 'ph', '🛍️'))
+      const body = el('div', 'body')
+      body.append(el('h3', '', o.title))
+      if (o.oldPrice && o.price && o.oldPrice > o.price) body.append(el('span', 'old', 'De ' + brl(o.oldPrice)))
+      if (o.price) {
+        const p = el('div', 'price', brl(o.price))
+        if (o.oldPrice > o.price) p.append(el('span', 'off', '-' + Math.round((1 - o.price / o.oldPrice) * 100) + '%'))
+        body.append(p)
+      }
+      if (o.coupon) { const c = el('div', 'coupon', 'Aplicando o cupom '); c.append(el('b', '', o.coupon)); body.append(c) }
+      body.append(el('div', 'meta', (STORE[o.store] || '') + ' · ' + when(o.at)))
+      const a = el('a', 'buy', 'Ver na ' + (STORE[o.store] || 'loja')); a.href = o.link; a.target = '_blank'; a.rel = 'nofollow sponsored noopener'
+      body.append(a)
+      card.append(pic, body)
+      box.append(card)
+    }
+    document.getElementById('atualizado').textContent = 'Atualizado ' + when(Date.parse(data.atualizado)) + '. Preços podem mudar: confira na loja.'
+    document.getElementById('ofertas').hidden = false
+  }).catch(() => {})
 </script>
 </body>
 </html>
