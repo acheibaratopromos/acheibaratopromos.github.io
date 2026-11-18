@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Achei Barato · Entrar no grupo</title>
+<meta name="description" content="Entre no grupo de promoções do Achei Barato no WhatsApp.">
+<meta property="og:title" content="Achei Barato · Grupo de promoções no WhatsApp">
+<meta property="og:description" content="As melhores promoções da Amazon, Mercado Livre e Shopee, todos os dias. Entre grátis.">
+<meta property="og:image" content="https://acheibaratopromos.github.io/img/capa.png">
+<link rel="icon" href="../img/icone-180.png">
+<style>
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; text-align: center; padding: 16px; box-sizing: border-box;
+    font: 18px/1.5 "Segoe UI", system-ui, -apple-system, sans-serif; color: #fff; background: linear-gradient(120deg, #ffb200, #ff6a00 55%, #f0302a); }
+  img { width: 96px; height: 96px; border-radius: 50%; }
+  a { display: inline-block; margin-top: 18px; background: #1fa855; color: #fff; font-weight: 800; padding: 14px 24px; border-radius: 999px; text-decoration: none; }
+</style>
+</head>
+<body>
+  <div>
+    <img src="../img/logo.png" alt="Achei Barato">
+    <p>Abrindo o grupo do Achei Barato no WhatsApp…</p>
+    <a id="entrar" href="https://chat.whatsapp.com/GOe3D1Lx0XJGLmfW7yd1xb">Entrar no grupo</a>
+  </div>
+<script>
+  // grupo.json is kept up to date by the bot: invite link of the first group with room.
+  const ok = (l) => typeof l === 'string' && /^https:\/\/chat\.whatsapp\.com\/[A-Za-z0-9]+$/.test(l)
+  const go = (l) => { document.getElementById('entrar').href = l; location.replace(l) }
+  fetch('../grupo.json?' + Date.now())
+    .then((r) => (r.ok ? r.json() : null))
+    .then((d) => go(d && ok(d.link) ? d.link : document.getElementById('entrar').href))
+    .catch(() => go(document.getElementById('entrar').href))
+</script>
+</body>
+</html>
