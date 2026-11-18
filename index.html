@@ -137,7 +137,7 @@
       }
       if (o.coupon) { const c = el('div', 'coupon', 'Aplicando o cupom '); c.append(el('b', '', o.coupon)); body.append(c) }
       body.append(el('div', 'meta', (STORE[o.store] || '') + ' · ' + when(o.at)))
-      const a = el('a', 'buy', 'Ver na ' + (STORE[o.store] || 'loja')); a.href = o.link; a.target = '_blank'; a.rel = 'nofollow sponsored noopener'
+      const a = el('a', 'buy', ({ amazon: 'Ver na Amazon', mercadolivre: 'Ver no Mercado Livre', shopee: 'Ver na Shopee' })[o.store] || 'Ver na loja'); a.href = o.link; a.target = '_blank'; a.rel = 'nofollow sponsored noopener'
       body.append(a)
       card.append(pic, body)
       box.append(card)
