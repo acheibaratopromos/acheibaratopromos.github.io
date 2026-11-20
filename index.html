@@ -27,6 +27,8 @@
   .hero p { margin: 0 auto; max-width: 560px; font-size: 19px; opacity: .95; }
   .cta { display: inline-flex; align-items: center; gap: 10px; margin-top: 26px; background: #fff; color: var(--brand2); font-weight: 800; padding: 14px 24px; border-radius: 999px; text-decoration: none; box-shadow: 0 8px 24px rgba(122, 20, 0, .25); }
   .cta.wa { background: var(--wa); color: #fff; }
+  .cta.tg { background: #229ed9; color: #fff; margin-left: 8px; }
+  @media (max-width: 520px) { .cta.tg { margin-left: 0; } }
   .cta[aria-disabled="true"] { opacity: .85; cursor: default; }
   main { max-width: 960px; margin: 0 auto; padding: 0 16px; }
   section { padding: 44px 0 8px; }
@@ -63,6 +65,7 @@
     <h1>Achei Barato</h1>
     <p>As melhores promoções da Amazon, Mercado Livre e Shopee, todos os dias. A gente garimpa as ofertas, você só escolhe o que vai levar.</p>
     <a class="cta wa" id="grupo" href="#" aria-disabled="true">Grupo no WhatsApp: em breve</a>
+    <a class="cta tg" id="telegram" href="https://t.me/+ThWZ9AB-ux1iNDQ5" target="_blank" rel="noopener">Entrar no Telegram</a>
   </header>
 
   <main>
@@ -76,7 +79,7 @@
       <h2>Como funciona</h2>
       <div class="grid">
         <div class="card"><span class="num">1</span><h3>A gente garimpa</h3><p>Acompanhamos as lojas o dia inteiro e separamos só as promoções que valem a pena.</p></div>
-        <div class="card"><span class="num">2</span><h3>Você recebe no grupo</h3><p>As ofertas chegam no nosso grupo do WhatsApp com foto, preço e o link direto do produto.</p></div>
+        <div class="card"><span class="num">2</span><h3>Você recebe no grupo</h3><p>As ofertas chegam no nosso grupo do WhatsApp e no Telegram com foto, preço e o link direto do produto.</p></div>
         <div class="card"><span class="num">3</span><h3>Compra na loja oficial</h3><p>O link leva direto para a página do produto na loja. A compra, a entrega e a garantia são da própria loja.</p></div>
       </div>
     </section>
