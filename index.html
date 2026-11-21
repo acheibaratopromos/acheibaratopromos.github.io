@@ -12,81 +12,151 @@
 <link rel="apple-touch-icon" href="img/icone-180.png">
 <style>
   :root {
-    --bg: #fffaf5; --ink: #1e1a16; --dim: #6f665d; --line: #f0e6db; --card: #ffffff;
-    --brand: #ff6a00; --brand2: #f0302a; --wa: #1fa855;
+    --bg: #fffaf5; --ink: #1e1a16; --dim: #6f665d; --line: #f0e6db; --card: #ffffff; --soft: #fff1e4;
+    --brand: #ff6a00; --brand2: #f0302a; --wa: #1fa855; --tg: #229ed9; --ok: #12a150;
+    --amazon: #ff9900; --ml: #ffd500; --shopee: #ee4d2d;
   }
   @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) { --bg: #16120f; --ink: #f6efe8; --dim: #b8ab9e; --line: #2c241e; --card: #1f1915; }
+    :root:not([data-theme="light"]) { --bg: #16120f; --ink: #f6efe8; --dim: #b8ab9e; --line: #2c241e; --card: #1f1915; --soft: #2a1f17; }
   }
   * { box-sizing: border-box; }
-  body { margin: 0; font: 17px/1.55 "Segoe UI", system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--ink); }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; font: 16px/1.5 "Segoe UI", system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--ink); }
   a { color: inherit; }
-  .hero { background: linear-gradient(120deg, #ffb200, var(--brand) 55%, var(--brand2)); color: #fff; text-align: center; padding: 56px 16px 64px; }
-  .hero img { width: 120px; height: 120px; border-radius: 50%; box-shadow: 0 10px 30px rgba(122, 20, 0, .35); }
-  .hero h1 { margin: 18px 0 6px; font-size: clamp(34px, 7vw, 52px); font-weight: 900; letter-spacing: -.5px; }
-  .hero p { margin: 0 auto; max-width: 560px; font-size: 19px; opacity: .95; }
-  .cta { display: inline-flex; align-items: center; gap: 10px; margin-top: 26px; background: #fff; color: var(--brand2); font-weight: 800; padding: 14px 24px; border-radius: 999px; text-decoration: none; box-shadow: 0 8px 24px rgba(122, 20, 0, .25); }
-  .cta.wa { background: var(--wa); color: #fff; }
-  .cta.tg { background: #229ed9; color: #fff; margin-left: 8px; }
-  @media (max-width: 520px) { .cta.tg { margin-left: 0; } }
-  .cta[aria-disabled="true"] { opacity: .85; cursor: default; }
-  main { max-width: 960px; margin: 0 auto; padding: 0 16px; }
-  section { padding: 44px 0 8px; }
-  h2 { font-size: 26px; margin: 0 0 16px; text-align: center; }
-  .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
-  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
-  .card h3 { margin: 0 0 6px; font-size: 18px; }
-  .card p { margin: 0; color: var(--dim); }
-  .num { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--brand); color: #fff; font-weight: 800; margin-bottom: 10px; }
-  .stores { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
-  .store { background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 10px 18px; font-weight: 700; }
-  .disclosure { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--brand); border-radius: 12px; padding: 16px 18px; color: var(--dim); font-size: 15px; }
-  .offers { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 210px), 1fr)); }
-  .offer { background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
-  .offer .pic { position: relative; width: 100%; height: 0; padding-top: 100%; overflow: hidden; background: #fff; flex: none; }
-  .offer .pic img { position: absolute; inset: 0; top: 0; left: 0; width: 100%; height: 100%; max-width: 100%; object-fit: contain; padding: 8px; box-sizing: border-box; }
-  .offer .pic .ph { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 44px; }
-  .offer .body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  button { font: inherit; cursor: pointer; }
+
+  .top { position: sticky; top: 0; z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); }
+  .top .in { max-width: 1180px; margin: 0 auto; padding: 10px 16px; display: flex; gap: 10px; align-items: center; }
+  .top .brand { display: flex; align-items: center; gap: 8px; font-weight: 900; text-decoration: none; white-space: nowrap; }
+  .top .brand img { width: 34px; height: 34px; border-radius: 50%; }
+  .top .q { flex: 1; min-width: 0; position: relative; }
+  .top .q input { width: 100%; padding: 10px 14px 10px 38px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--ink); font: inherit; }
+  .top .q span { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); opacity: .6; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; padding: 9px 14px; border-radius: 999px; font-weight: 800; text-decoration: none; white-space: nowrap; font-size: 14px; }
+  .pill.wa { background: var(--wa); color: #fff; }
+  .pill.tg { background: var(--tg); color: #fff; }
+  @media (max-width: 720px) { .top .pill .t { display: none; } .top .brand b { display: none; } }
+
+  .hero { background: linear-gradient(120deg, #ffb200, var(--brand) 55%, var(--brand2)); color: #fff; }
+  .hero .in { max-width: 1180px; margin: 0 auto; padding: 34px 16px 30px; display: flex; gap: 22px; align-items: center; }
+  .hero img { width: 92px; height: 92px; border-radius: 50%; box-shadow: 0 10px 30px rgba(122, 20, 0, .35); flex: none; }
+  .hero h1 { margin: 0; font-size: clamp(26px, 5vw, 42px); font-weight: 900; letter-spacing: -.5px; line-height: 1.1; }
+  .hero p { margin: 6px 0 0; opacity: .95; max-width: 640px; }
+  .live { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; background: rgba(255,255,255,.18); padding: 6px 12px; border-radius: 999px; font-weight: 700; font-size: 14px; }
+  .live i { width: 9px; height: 9px; border-radius: 50%; background: #3dff8f; animation: pulse 1.8s infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(61,255,143,.7); } 70% { box-shadow: 0 0 0 9px rgba(61,255,143,0); } 100% { box-shadow: 0 0 0 0 rgba(61,255,143,0); } }
+  @media (max-width: 560px) { .hero img { width: 64px; height: 64px; } .hero .in { padding: 22px 16px; gap: 14px; } }
+
+  main { max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+  section { padding: 28px 0 4px; }
+  h2 { font-size: 22px; margin: 0 0 4px; }
+  .sub { color: var(--dim); font-size: 14px; margin: 0 0 14px; }
+
+  .rail { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(220px, 250px); gap: 14px; overflow-x: auto; padding-bottom: 8px; scroll-snap-type: x mandatory; }
+  .rail > * { scroll-snap-align: start; }
+
+  .bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 4px 0 14px; }
+  .chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 8px; }
+  .chip { flex: none; border: 1px solid var(--line); background: var(--card); color: var(--ink); padding: 7px 12px; border-radius: 999px; font-size: 14px; font-weight: 600; white-space: nowrap; }
+  .chip small { color: var(--dim); font-weight: 500; margin-left: 4px; }
+  .chip.on { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .chip.on small { color: #fff; opacity: .8; }
+  select.sel { border: 1px solid var(--line); background: var(--card); color: var(--ink); padding: 7px 10px; border-radius: 999px; font: inherit; font-size: 14px; max-width: 100%; }
+  .count { color: var(--dim); font-size: 14px; margin-left: auto; }
+
+  .offers { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 215px), 1fr)); }
+  .offer { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; transition: transform .15s, box-shadow .15s; min-width: 0; }
+  .offer:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(0,0,0,.08); }
+  .pic { position: relative; width: 100%; height: 0; padding-top: 100%; overflow: hidden; background: #fff; flex: none; }
+  .pic img { position: absolute; inset: 0; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; padding: 10px; }
+  .pic .ph { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 46px; }
+  .badge { position: absolute; top: 10px; left: 10px; background: var(--brand2); color: #fff; font-weight: 900; font-size: 13px; padding: 3px 9px; border-radius: 999px; }
+  .new { position: absolute; top: 10px; right: 10px; background: var(--ok); color: #fff; font-weight: 800; font-size: 11px; padding: 3px 8px; border-radius: 999px; }
+  .body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .meta { display: flex; justify-content: space-between; gap: 6px; font-size: 12px; color: var(--dim); }
+  .st { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--ink); }
+  .st i { width: 8px; height: 8px; border-radius: 50%; }
   .offer h3 { font-size: 15px; line-height: 1.35; margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-  .offer .old { color: var(--dim); text-decoration: line-through; font-size: 13px; }
-  .offer .price { font-size: 21px; font-weight: 900; color: var(--brand2); }
-  .offer .off { font-size: 12px; font-weight: 800; color: #fff; background: var(--wa); border-radius: 6px; padding: 1px 6px; margin-left: 6px; vertical-align: middle; }
-  .offer .coupon { font-size: 13px; color: var(--dim); }
-  .offer .coupon b { color: var(--ink); }
-  .offer .meta { font-size: 12px; color: var(--dim); margin-top: auto; }
-  .offer .buy { display: block; text-align: center; background: var(--brand); color: #fff; font-weight: 800; padding: 10px; border-radius: 10px; text-decoration: none; }
-  .updated { text-align: center; color: var(--dim); font-size: 13px; margin: -8px 0 16px; }
-  footer { text-align: center; color: var(--dim); font-size: 14px; padding: 40px 16px 32px; }
+  .prices { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-top: auto; }
+  .price { font-size: 22px; font-weight: 900; color: var(--brand2); }
+  .old { color: var(--dim); text-decoration: line-through; font-size: 13px; }
+  .cp { display: inline-flex; align-items: center; gap: 6px; border: 1.5px dashed var(--brand); color: var(--brand); background: var(--soft); border-radius: 8px; padding: 3px 8px; font-weight: 800; font-size: 13px; width: fit-content; max-width: 100%; }
+  .cp button { border: 0; background: var(--brand); color: #fff; border-radius: 6px; font-size: 11px; padding: 2px 6px; }
+  .acts { display: flex; gap: 6px; }
+  .buy { flex: 1; text-align: center; background: var(--brand); color: #fff; font-weight: 800; padding: 10px; border-radius: 12px; text-decoration: none; }
+  .share { border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 12px; padding: 0 12px; font-size: 16px; }
+
+  .coupon .pic { background: linear-gradient(135deg, var(--brand), var(--brand2)); }
+  .coupon .ticket { position: absolute; inset: 16px; border: 2px dashed rgba(255,255,255,.75); border-radius: 14px; display: grid; place-items: center; text-align: center; color: #fff; padding: 10px; }
+  .coupon .ticket b { display: block; font-size: 22px; letter-spacing: 1px; word-break: break-all; }
+  .coupon .ticket span { font-size: 13px; opacity: .9; }
+  .coupon .det { font-size: 13px; color: var(--dim); margin: 0; padding-left: 16px; }
+
+  .more { display: block; margin: 18px auto 0; border: 1px solid var(--line); background: var(--card); color: var(--ink); padding: 10px 22px; border-radius: 999px; font-weight: 700; }
+  .empty { text-align: center; color: var(--dim); padding: 30px 0; grid-column: 1 / -1; }
+
+  .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px; }
+  .card h3 { margin: 0 0 4px; font-size: 17px; }
+  .card p { margin: 0; color: var(--dim); }
+  .num { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--brand); color: #fff; font-weight: 800; margin-bottom: 8px; }
+  .disclosure { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--brand); border-radius: 12px; padding: 14px 16px; color: var(--dim); font-size: 14px; }
+  footer { text-align: center; color: var(--dim); font-size: 14px; padding: 36px 16px 30px; }
+  .toast { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 999px; font-weight: 700; opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 30; }
+  .toast.on { opacity: 1; }
 </style>
 </head>
 <body>
-  <header class="hero">
-    <img src="img/logo.png" alt="Logo Achei Barato" width="120" height="120">
-    <h1>Achei Barato</h1>
-    <p>As melhores promoções da Amazon, Mercado Livre e Shopee, todos os dias. A gente garimpa as ofertas, você só escolhe o que vai levar.</p>
-    <a class="cta wa" id="grupo" href="#" aria-disabled="true">Grupo no WhatsApp: em breve</a>
-    <a class="cta tg" id="telegram" href="https://t.me/+ThWZ9AB-ux1iNDQ5" target="_blank" rel="noopener">Entrar no Telegram</a>
-  </header>
+  <div class="top"><div class="in">
+    <a class="brand" href="#"><img src="img/logo.png" alt=""><b>Achei Barato</b></a>
+    <label class="q"><span aria-hidden="true">🔎</span><input type="search" id="q" placeholder="Buscar produto, marca ou loja" aria-label="Buscar ofertas"></label>
+    <a class="pill wa" href="grupo/" target="_blank" rel="noopener">💬 <span class="t">WhatsApp</span></a>
+    <a class="pill tg" href="https://t.me/+ThWZ9AB-ux1iNDQ5" target="_blank" rel="noopener">✈️ <span class="t">Telegram</span></a>
+  </div></div>
+
+  <header class="hero"><div class="in">
+    <img src="img/logo.png" alt="Logo Achei Barato" width="92" height="92">
+    <div>
+      <h1>As melhores promoções, todo dia</h1>
+      <p>Amazon, Mercado Livre e Shopee: a gente garimpa o dia inteiro e você só escolhe o que vai levar. Tudo com link direto da loja oficial.</p>
+      <span class="live" id="live" hidden><i></i><span id="liveText"></span></span>
+    </div>
+  </div></header>
 
   <main>
+    <section id="destaques" hidden>
+      <h2>🔥 Maiores descontos de hoje</h2>
+      <p class="sub">As ofertas com mais desconto das últimas 24 horas.</p>
+      <div class="rail" id="topRail"></div>
+    </section>
+
+    <section id="cupons" hidden>
+      <h2>🎟️ Cupons ativos</h2>
+      <p class="sub">Copie o código e use na loja pelo nosso link. Cupons acabam rápido!</p>
+      <div class="rail" id="couponRail"></div>
+    </section>
+
     <section id="ofertas" hidden>
-      <h2>Ofertas de hoje</h2>
-      <p class="updated" id="atualizado"></p>
+      <h2>Todas as ofertas</h2>
+      <p class="sub" id="atualizado"></p>
+      <div class="chips" id="cats" role="toolbar" aria-label="Categorias"></div>
+      <div class="bar">
+        <select class="sel" id="loja" aria-label="Loja"><option value="">Todas as lojas</option><option value="amazon">Amazon</option><option value="mercadolivre">Mercado Livre</option><option value="shopee">Shopee</option></select>
+        <select class="sel" id="faixa" aria-label="Faixa de preço"><option value="">Qualquer preço</option><option value="0-100">Até R$ 100</option><option value="100-500">R$ 100 a 500</option><option value="500-1500">R$ 500 a 1.500</option><option value="1500-">Acima de R$ 1.500</option></select>
+        <select class="sel" id="ordem" aria-label="Ordenar"><option value="recentes">Mais recentes</option><option value="desconto">Maior desconto</option><option value="menor">Menor preço</option><option value="maior">Maior preço</option></select>
+        <span class="count" id="count"></span>
+      </div>
       <div class="offers" id="lista"></div>
+      <button class="more" id="more" type="button" hidden>Ver mais ofertas</button>
     </section>
 
     <section>
       <h2>Como funciona</h2>
       <div class="grid">
-        <div class="card"><span class="num">1</span><h3>A gente garimpa</h3><p>Acompanhamos as lojas o dia inteiro e separamos só as promoções que valem a pena.</p></div>
-        <div class="card"><span class="num">2</span><h3>Você recebe no grupo</h3><p>As ofertas chegam no nosso grupo do WhatsApp e no Telegram com foto, preço e o link direto do produto.</p></div>
+        <div class="card"><span class="num">1</span><h3>A gente garimpa</h3><p>Acompanhamos as lojas o dia inteiro e separamos só as promoções que valem a pena: com desconto de verdade e sem anúncio duvidoso.</p></div>
+        <div class="card"><span class="num">2</span><h3>Você recebe no grupo</h3><p>As ofertas chegam no WhatsApp e no Telegram com foto, preço e o link direto do produto. E ficam todas aqui no site.</p></div>
         <div class="card"><span class="num">3</span><h3>Compra na loja oficial</h3><p>O link leva direto para a página do produto na loja. A compra, a entrega e a garantia são da própria loja.</p></div>
       </div>
-    </section>
-
-    <section>
-      <h2>Lojas que acompanhamos</h2>
-      <div class="stores"><span class="store">Amazon</span><span class="store">Mercado Livre</span><span class="store">Shopee</span></div>
     </section>
 
     <section>
@@ -98,56 +168,138 @@
   <footer>
     <p>© 2026 Achei Barato · <a href="privacidade.html">Política de privacidade</a></p>
   </footer>
+  <div class="toast" id="toast" role="status"></div>
 
 <script>
-  // Link de convite do grupo: preencha quando estiver pronto.
-  const GROUP_URL = 'grupo/' // fixed link: the bot points it at the group with room
-  if (GROUP_URL) {
-    const a = document.getElementById('grupo')
-    a.href = GROUP_URL
-    a.textContent = 'Entrar no grupo do WhatsApp'
-    a.removeAttribute('aria-disabled')
-  } else {
-    document.getElementById('grupo').addEventListener('click', (e) => e.preventDefault())
+  // Data: ofertas.json, written by the bot every few minutes (newest first).
+  const STORE = { amazon: ['Amazon', 'var(--amazon)'], mercadolivre: ['Mercado Livre', 'var(--ml)'], shopee: ['Shopee', 'var(--shopee)'] }
+  // Same categories as the bot (src/offer/categories.ts).
+  const CATS = [
+    ['eletronicos', '📱', 'Eletrônicos'], ['eletrodomesticos', '🏠', 'Eletrodomésticos'], ['casa', '🍳', 'Casa e cozinha'], ['cama', '🛏️', 'Cama, mesa e banho'],
+    ['moda', '👕', 'Moda'], ['calcados', '👟', 'Calçados'], ['acessorios', '⌚', 'Acessórios'], ['beleza', '💄', 'Beleza'], ['games', '🎮', 'Games'],
+    ['infantil', '🧸', 'Infantil'], ['ferramentas', '🔧', 'Ferramentas'], ['esporte', '🏋️', 'Esporte e saúde'], ['mercado', '🛒', 'Mercado e bebidas'], ['outros', '🛍️', 'Outros'],
+  ]
+  const PAGE = 24
+  const LINK_OK = /^https:\/\/([a-z0-9-]+\.)*(amazon\.com\.br|mercadolivre\.com\.br|shopee\.com\.br|meli\.la)\//
+  const $ = (id) => document.getElementById(id)
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e }
+  const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: Number.isInteger(v) ? 0 : 2 })
+  const fold = (s) => (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+  const off = (o) => (o.oldPrice && o.price && o.oldPrice > o.price ? Math.round((1 - o.price / o.oldPrice) * 100) : 0)
+  const ago = (ms) => {
+    const m = Math.max(1, Math.round((Date.now() - ms) / 60000))
+    if (m < 60) return `há ${m} min`
+    const h = Math.round(m / 60)
+    return h < 24 ? `há ${h}h` : `há ${Math.round(h / 24)} dia${h >= 36 ? 's' : ''}`
+  }
+  const toast = (t) => { const e = $('toast'); e.textContent = t; e.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => e.classList.remove('on'), 1800) }
+  const copy = async (code) => { try { await navigator.clipboard.writeText(code); toast(`Cupom ${code} copiado!`) } catch { toast(`Cupom: ${code}`) } }
+  const share = async (o) => {
+    const text = `${o.title}${o.price ? ` por ${brl(o.price)}` : ''} 👉 ${o.link}`
+    if (navigator.share) { try { await navigator.share({ title: o.title, text }) } catch {} } else window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener')
+  }
+  const storeName = (o) => (STORE[o.store] || ['Loja'])[0]
+
+  function storeTag(o) {
+    const meta = el('div', 'meta')
+    const st = el('span', 'st'); const dot = el('i'); dot.style.background = (STORE[o.store] || [])[1] || 'var(--dim)'
+    st.append(dot, storeName(o)); meta.append(st, el('span', '', ago(o.at)))
+    return meta
   }
 
-  // Ofertas de hoje: the bot adds every offer it posts in the group to ofertas.json.
-  const STORE = { amazon: 'Amazon', mercadolivre: 'Mercado Livre', shopee: 'Shopee' }
-  const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: Number.isInteger(v) ? 0 : 2 })
-  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e }
-  const when = (ms) => {
-    const d = new Date(ms), today = new Date().toDateString() === d.toDateString()
-    return (today ? 'hoje' : d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })) + ' às ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
-  }
-  fetch('ofertas.json?' + Date.now()).then((r) => (r.ok ? r.json() : null)).then((data) => {
-    const list = (data && data.ofertas) || []
-    if (!list.length) return
-    const box = document.getElementById('lista')
-    for (const o of list.slice(0, 60)) {
-      if (!/^https:\/\/([a-z0-9-]+\.)*(amazon\.com\.br|mercadolivre\.com\.br|shopee\.com\.br|meli\.la)\//.test(o.link)) continue
-      const card = el('article', 'offer')
-      const pic = el('div', 'pic')
-      if (o.image && /^https:\/\//.test(o.image)) {
-        const img = el('img'); img.src = o.image; img.alt = ''; img.loading = 'lazy'; pic.append(img)
-      } else pic.append(el('span', 'ph', '🛍️'))
-      const body = el('div', 'body')
-      body.append(el('h3', '', o.title))
-      if (o.oldPrice && o.price && o.oldPrice > o.price) body.append(el('span', 'old', 'De ' + brl(o.oldPrice)))
-      if (o.price) {
-        const p = el('div', 'price', brl(o.price))
-        if (o.oldPrice > o.price) p.append(el('span', 'off', '-' + Math.round((1 - o.price / o.oldPrice) * 100) + '%'))
-        body.append(p)
-      }
-      if (o.coupon) { const c = el('div', 'coupon', 'Aplicando o cupom '); c.append(el('b', '', o.coupon)); body.append(c) }
-      body.append(el('div', 'meta', (STORE[o.store] || '') + ' · ' + when(o.at)))
-      const a = el('a', 'buy', ({ amazon: 'Ver na Amazon', mercadolivre: 'Ver no Mercado Livre', shopee: 'Ver na Shopee' })[o.store] || 'Ver na loja'); a.href = o.link; a.target = '_blank'; a.rel = 'nofollow sponsored noopener'
-      body.append(a)
-      card.append(pic, body)
-      box.append(card)
+  function offerCard(o) {
+    const card = el('article', 'offer')
+    const pic = el('div', 'pic')
+    if (o.image && /^https:\/\//.test(o.image)) { const img = el('img'); img.src = o.image; img.alt = ''; img.loading = 'lazy'; pic.append(img) } else pic.append(el('span', 'ph', '🛍️'))
+    const d = off(o)
+    if (d >= 5) pic.append(el('span', 'badge', `-${d}%`))
+    if (Date.now() - o.at < 3600e3) pic.append(el('span', 'new', '🆕 agora'))
+    const body = el('div', 'body')
+    body.append(storeTag(o), el('h3', '', o.title))
+    if (o.coupon) {
+      const cp = el('div', 'cp', `🎟️ ${o.coupon}`); const b = el('button', '', 'copiar'); b.type = 'button'; b.onclick = () => copy(o.coupon); cp.append(b); body.append(cp)
     }
-    document.getElementById('atualizado').textContent = 'Atualizado ' + when(Date.parse(data.atualizado)) + '. Preços podem mudar: confira na loja.'
-    document.getElementById('ofertas').hidden = false
+    const prices = el('div', 'prices')
+    if (o.price) prices.append(el('span', 'price', brl(o.price)))
+    if (d) prices.append(el('span', 'old', brl(o.oldPrice)))
+    body.append(prices)
+    const acts = el('div', 'acts')
+    const a = el('a', 'buy', `Ver ${o.store === 'mercadolivre' ? 'no' : 'na'} ${storeName(o)}`); a.href = o.link; a.target = '_blank'; a.rel = 'nofollow sponsored noopener'
+    const sh = el('button', 'share', '↗'); sh.type = 'button'; sh.title = 'Compartilhar'; sh.setAttribute('aria-label', 'Compartilhar'); sh.onclick = () => share(o)
+    acts.append(a, sh); body.append(acts)
+    card.append(pic, body)
+    return card
+  }
+
+  function couponCard(o) {
+    const card = el('article', 'offer coupon')
+    const pic = el('div', 'pic'); const t = el('div', 'ticket'); const inner = el('div')
+    inner.append(el('span', '', `Cupom ${storeName(o)}`), el('b', '', o.coupon || ''))
+    t.append(inner); pic.append(t)
+    const body = el('div', 'body'); body.append(storeTag(o))
+    if (o.details && o.details.length) { const ul = el('ul', 'det'); for (const x of o.details.slice(0, 3)) ul.append(el('li', '', x)); body.append(ul) }
+    const acts = el('div', 'acts')
+    const b = el('a', 'buy', 'Copiar e ir para a loja'); b.href = o.link; b.target = '_blank'; b.rel = 'nofollow sponsored noopener'; b.onclick = () => copy(o.coupon)
+    acts.append(b); body.append(acts)
+    card.append(pic, body)
+    return card
+  }
+
+  let all = [], shown = PAGE, cat = ''
+  function filtered() {
+    const q = fold($('q').value.trim()).split(/\s+/).filter(Boolean)
+    const loja = $('loja').value
+    const [min, max] = ($('faixa').value || '-').split('-').map((x) => (x ? Number(x) : null))
+    let list = all.filter((o) => o.kind !== 'cupom')
+      .filter((o) => !cat || (o.cats || ['outros']).includes(cat))
+      .filter((o) => !loja || o.store === loja)
+      .filter((o) => (min === null || (o.price || 0) >= min) && (max === null || (o.price || 0) < max))
+      .filter((o) => q.every((w) => fold(`${o.title} ${storeName(o)}`).includes(w)))
+    const ord = $('ordem').value
+    if (ord === 'desconto') list = [...list].sort((a, b) => off(b) - off(a))
+    if (ord === 'menor') list = [...list].sort((a, b) => (a.price || 1e9) - (b.price || 1e9))
+    if (ord === 'maior') list = [...list].sort((a, b) => (b.price || 0) - (a.price || 0))
+    return list
+  }
+  function render() {
+    const list = filtered()
+    const box = $('lista'); box.replaceChildren()
+    for (const o of list.slice(0, shown)) box.append(offerCard(o))
+    if (!list.length) box.append(el('p', 'empty', 'Nenhuma oferta com esses filtros agora. Tente outra busca ou categoria.'))
+    $('count').textContent = `${list.length} oferta${list.length === 1 ? '' : 's'}`
+    $('more').hidden = list.length <= shown
+  }
+  function renderCats() {
+    const offers = all.filter((o) => o.kind !== 'cupom')
+    const n = (id) => offers.filter((o) => (o.cats || ['outros']).includes(id)).length
+    const box = $('cats'); box.replaceChildren()
+    const chip = (id, label, count) => { const b = el('button', 'chip' + (cat === id ? ' on' : ''), label); b.type = 'button'; b.append(el('small', '', String(count))); b.onclick = () => { cat = id; shown = PAGE; renderCats(); render() }; box.append(b) }
+    chip('', 'Todas', offers.length)
+    for (const [id, emoji, name] of CATS) { const c = n(id); if (c) chip(id, `${emoji} ${name}`, c) }
+  }
+
+  fetch('ofertas.json?' + Date.now()).then((r) => (r.ok ? r.json() : null)).then((data) => {
+    all = ((data && data.ofertas) || []).filter((o) => LINK_OK.test(o.link || ''))
+    if (!all.length) return
+    const offersDay = all.filter((o) => o.kind !== 'cupom' && Date.now() - o.at < 86400e3)
+    $('liveText').textContent = `${offersDay.length} ofertas nas últimas 24h · a mais recente ${ago(all[0].at)}`
+    $('live').hidden = false
+
+    const top = offersDay.filter((o) => off(o) >= 20).sort((a, b) => off(b) - off(a)).slice(0, 10)
+    if (top.length >= 2) { for (const o of top) $('topRail').append(offerCard(o)); $('destaques').hidden = false }
+
+    const cupons = all.filter((o) => o.kind === 'cupom' && Date.now() - o.at < 2 * 86400e3).slice(0, 10)
+    if (cupons.length) { for (const o of cupons) $('couponRail').append(couponCard(o)); $('cupons').hidden = false }
+
+    $('atualizado').textContent = `Atualizado ${ago(Date.parse(data.atualizado))}. Preços podem mudar: confira sempre na loja.`
+    $('ofertas').hidden = false
+    renderCats(); render()
   }).catch(() => {})
+
+  let t
+  $('q').addEventListener('input', () => { clearTimeout(t); t = setTimeout(() => { shown = PAGE; render(); if ($('q').value) $('ofertas').scrollIntoView({ block: 'start' }) }, 250) })
+  for (const id of ['loja', 'faixa', 'ordem']) $(id).onchange = () => { shown = PAGE; render() }
+  $('more').onclick = () => { shown += PAGE; render() }
 </script>
 </body>
 </html>
