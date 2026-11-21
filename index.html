@@ -3,171 +3,252 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Achei Barato · As melhores promoções, todo dia</title>
-<meta name="description" content="As melhores promoções da Amazon, Mercado Livre e Shopee, todos os dias. A gente garimpa as ofertas, você só escolhe o que vai levar.">
-<meta property="og:title" content="Achei Barato">
+<title>Achei Barato · Ofertas garimpadas todo dia</title>
+<meta name="description" content="As melhores promoções da Amazon, Mercado Livre e Shopee, garimpadas o dia inteiro. Desconto de verdade, link direto da loja oficial.">
+<meta property="og:title" content="Achei Barato · Ofertas garimpadas todo dia">
 <meta property="og:description" content="As melhores promoções da Amazon, Mercado Livre e Shopee, todos os dias.">
 <meta property="og:image" content="img/capa.png">
+<meta name="theme-color" content="#ff6a00">
 <link rel="icon" href="img/icone-180.png">
 <link rel="apple-touch-icon" href="img/icone-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #fffaf5; --ink: #1e1a16; --dim: #6f665d; --line: #f0e6db; --card: #ffffff; --soft: #fff1e4;
-    --brand: #ff6a00; --brand2: #f0302a; --wa: #1fa855; --tg: #229ed9; --ok: #12a150;
-    --amazon: #ff9900; --ml: #ffd500; --shopee: #ee4d2d;
+    --bg: #faf7f3; --surface: #ffffff; --ink: #1b1714; --ink2: #4a423b; --dim: #8a8078; --line: #ece5dd; --line2: #f4efe9;
+    --brand: #ff6a00; --brand-ink: #e55a00; --hot: #e8322b; --soft: #fff3e8; --ok: #0f9d58;
+    --wa: #1fa855; --tg: #229ed9; --amazon: #ff9900; --ml: #f5cc00; --shopee: #ee4d2d;
+    --r: 16px; --shadow: 0 1px 2px rgba(27,23,20,.04), 0 6px 18px rgba(27,23,20,.05); --shadow-h: 0 2px 4px rgba(27,23,20,.06), 0 16px 34px rgba(27,23,20,.10);
+    --head: "Sora", "Segoe UI", system-ui, sans-serif; --body: "Inter", "Segoe UI", system-ui, sans-serif;
   }
   @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) { --bg: #16120f; --ink: #f6efe8; --dim: #b8ab9e; --line: #2c241e; --card: #1f1915; --soft: #2a1f17; }
+    :root:not([data-theme="light"]) {
+      --bg: #13100e; --surface: #1c1815; --ink: #f5eee7; --ink2: #d6ccc2; --dim: #9d9287; --line: #2c2620; --line2: #221d19; --soft: #2a1d12;
+      --shadow: 0 1px 2px rgba(0,0,0,.3); --shadow-h: 0 12px 30px rgba(0,0,0,.45);
+    }
   }
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { margin: 0; font: 16px/1.5 "Segoe UI", system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--ink); }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { margin: 0; font: 15px/1.55 var(--body); background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
   a { color: inherit; }
-  button { font: inherit; cursor: pointer; }
+  button, input, select { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  :focus-visible { outline: 3px solid color-mix(in srgb, var(--brand) 55%, transparent); outline-offset: 2px; border-radius: 10px; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+  @media (max-width: 560px) { .wrap { padding: 0 16px; } }
 
-  .top { position: sticky; top: 0; z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); }
-  .top .in { max-width: 1180px; margin: 0 auto; padding: 10px 16px; display: flex; gap: 10px; align-items: center; }
-  .top .brand { display: flex; align-items: center; gap: 8px; font-weight: 900; text-decoration: none; white-space: nowrap; }
-  .top .brand img { width: 34px; height: 34px; border-radius: 50%; }
-  .top .q { flex: 1; min-width: 0; position: relative; }
-  .top .q input { width: 100%; padding: 10px 14px 10px 38px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--ink); font: inherit; }
-  .top .q span { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); opacity: .6; }
-  .pill { display: inline-flex; align-items: center; gap: 6px; padding: 9px 14px; border-radius: 999px; font-weight: 800; text-decoration: none; white-space: nowrap; font-size: 14px; }
-  .pill.wa { background: var(--wa); color: #fff; }
-  .pill.tg { background: var(--tg); color: #fff; }
-  @media (max-width: 720px) { .top .pill .t { display: none; } .top .brand b { display: none; } }
+  /* ── top bar ── */
+  .top { position: sticky; top: 0; z-index: 30; background: color-mix(in srgb, var(--surface) 92%, transparent); backdrop-filter: saturate(1.4) blur(10px); border-bottom: 1px solid var(--line); }
+  .top .wrap { display: flex; align-items: center; gap: 14px; height: 64px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex: none; }
+  .logo img { width: 36px; height: 36px; border-radius: 50%; }
+  .logo b { font: 800 18px var(--head); letter-spacing: -.3px; }
+  .search { flex: 1; max-width: 560px; margin: 0 auto; position: relative; }
+  .search input { width: 100%; height: 44px; padding: 0 16px 0 42px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); transition: border-color .15s, background .15s; }
+  .search input:focus { outline: none; border-color: var(--brand); background: var(--surface); }
+  .search svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--dim); }
+  .join { display: flex; gap: 8px; flex: none; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 40px; padding: 0 14px; border-radius: 11px; font-weight: 700; font-size: 14px; text-decoration: none; border: 0; white-space: nowrap; transition: transform .12s, filter .12s; }
+  .btn:hover { filter: brightness(1.05); transform: translateY(-1px); }
+  .btn.wa { background: var(--wa); color: #fff; } .btn.tg { background: var(--tg); color: #fff; }
+  .btn.ghost { background: var(--surface); border: 1px solid var(--line); color: var(--ink); }
+  .btn svg { width: 17px; height: 17px; }
+  @media (max-width: 760px) { .logo b, .join .t { display: none; } .join .btn { width: 40px; padding: 0; } }
 
-  .hero { background: linear-gradient(120deg, #ffb200, var(--brand) 55%, var(--brand2)); color: #fff; }
-  .hero .in { max-width: 1180px; margin: 0 auto; padding: 34px 16px 30px; display: flex; gap: 22px; align-items: center; }
-  .hero img { width: 92px; height: 92px; border-radius: 50%; box-shadow: 0 10px 30px rgba(122, 20, 0, .35); flex: none; }
-  .hero h1 { margin: 0; font-size: clamp(26px, 5vw, 42px); font-weight: 900; letter-spacing: -.5px; line-height: 1.1; }
-  .hero p { margin: 6px 0 0; opacity: .95; max-width: 640px; }
-  .live { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; background: rgba(255,255,255,.18); padding: 6px 12px; border-radius: 999px; font-weight: 700; font-size: 14px; }
-  .live i { width: 9px; height: 9px; border-radius: 50%; background: #3dff8f; animation: pulse 1.8s infinite; }
-  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(61,255,143,.7); } 70% { box-shadow: 0 0 0 9px rgba(61,255,143,0); } 100% { box-shadow: 0 0 0 0 rgba(61,255,143,0); } }
-  @media (max-width: 560px) { .hero img { width: 64px; height: 64px; } .hero .in { padding: 22px 16px; gap: 14px; } }
+  /* ── hero ── */
+  .hero { padding: 40px 0 8px; }
+  .hero .wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: 36px; align-items: center; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--ink2); background: var(--surface); border: 1px solid var(--line); padding: 6px 12px; border-radius: 999px; }
+  .eyebrow i { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); animation: pulse 2s infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(15,157,88,.55); } 70% { box-shadow: 0 0 0 8px rgba(15,157,88,0); } 100% { box-shadow: 0 0 0 0 rgba(15,157,88,0); } }
+  .hero h1 { font: 800 clamp(32px, 5.2vw, 54px)/1.04 var(--head); letter-spacing: -1.4px; margin: 16px 0 14px; }
+  .hero h1 em { font-style: normal; background: linear-gradient(100deg, #ffae00, var(--brand) 45%, var(--hot)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero p.lead { font-size: 17px; color: var(--ink2); max-width: 520px; margin: 0 0 22px; }
+  .hero .cta { display: flex; gap: 10px; flex-wrap: wrap; }
+  .hero .cta .btn { height: 48px; padding: 0 20px; font-size: 15px; border-radius: 13px; }
+  .stats { display: flex; gap: 26px; margin-top: 28px; flex-wrap: wrap; }
+  .stats div { display: flex; flex-direction: column; }
+  .stats b { font: 800 24px var(--head); letter-spacing: -.5px; }
+  .stats span { font-size: 13px; color: var(--dim); }
+  .spot { position: relative; }
+  .spot::before { content: ""; position: absolute; inset: -30px -10px auto auto; width: 280px; height: 280px; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--brand) 26%, transparent), transparent); z-index: 0; }
+  .spot .label { position: relative; z-index: 1; font: 700 12px var(--body); text-transform: uppercase; letter-spacing: .08em; color: var(--brand-ink); margin-bottom: 10px; }
+  .spot .offer { position: relative; z-index: 1; max-width: 340px; margin-left: auto; box-shadow: var(--shadow-h); }
+  @media (max-width: 860px) { .hero .wrap { grid-template-columns: 1fr; } .spot { display: none; } .hero { padding-top: 26px; } }
+  @media (max-width: 560px) {
+    .hero { padding: 18px 0 0; }
+    .hero h1 { font-size: 30px; letter-spacing: -.8px; margin: 12px 0 8px; }
+    .hero p.lead { font-size: 15px; margin-bottom: 14px; }
+    .hero .cta { flex-wrap: nowrap; }
+    .hero .cta .btn { flex: 1; height: 44px; padding: 0 10px; font-size: 14px; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 16px; }
+    .stats b { font-size: 19px; }
+    .stats span { font-size: 11.5px; line-height: 1.3; }
+    .eyebrow { font-size: 12px; }
+    section.block { padding-top: 28px; }
+    .filters { position: static; padding-top: 0; }
+    .sel { font-size: 13px; padding-right: 26px; }
+  }
 
-  main { max-width: 1180px; margin: 0 auto; padding: 0 16px; }
-  section { padding: 28px 0 4px; }
-  h2 { font-size: 22px; margin: 0 0 4px; }
-  .sub { color: var(--dim); font-size: 14px; margin: 0 0 14px; }
-
-  .rail { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(220px, 250px); gap: 14px; overflow-x: auto; padding-bottom: 8px; scroll-snap-type: x mandatory; }
+  /* ── sections ── */
+  section.block { padding: 40px 0 0; }
+  .head { display: flex; align-items: end; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+  .head h2 { font: 700 22px var(--head); letter-spacing: -.4px; margin: 0; }
+  .head p { margin: 2px 0 0; color: var(--dim); font-size: 14px; }
+  .arrows { display: flex; gap: 6px; }
+  .arrows button { width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; }
+  @media (max-width: 560px) { .arrows { display: none; } }
+  .rail { display: grid; grid-auto-flow: column; grid-auto-columns: 232px; gap: 14px; overflow-x: auto; padding: 4px 2px 12px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .rail::-webkit-scrollbar { display: none; }
   .rail > * { scroll-snap-align: start; }
 
-  .bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 4px 0 14px; }
-  .chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 8px; }
-  .chip { flex: none; border: 1px solid var(--line); background: var(--card); color: var(--ink); padding: 7px 12px; border-radius: 999px; font-size: 14px; font-weight: 600; white-space: nowrap; }
-  .chip small { color: var(--dim); font-weight: 500; margin-left: 4px; }
-  .chip.on { background: var(--brand); color: #fff; border-color: var(--brand); }
-  .chip.on small { color: #fff; opacity: .8; }
-  select.sel { border: 1px solid var(--line); background: var(--card); color: var(--ink); padding: 7px 10px; border-radius: 999px; font: inherit; font-size: 14px; max-width: 100%; }
-  .count { color: var(--dim); font-size: 14px; margin-left: auto; }
+  /* ── filters ── */
+  .filters { position: sticky; top: 64px; z-index: 20; background: var(--bg); padding: 10px 0 12px; margin-bottom: 4px; }
+  .chips { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; mask-image: linear-gradient(90deg, #000 92%, transparent); }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip { flex: none; height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); font-size: 14px; font-weight: 600; color: var(--ink2); display: inline-flex; align-items: center; gap: 6px; transition: background .12s, border-color .12s; }
+  .chip:hover { border-color: color-mix(in srgb, var(--brand) 40%, var(--line)); }
+  .chip small { font-weight: 600; color: var(--dim); font-size: 12px; }
+  .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--surface); }
+  .chip[aria-pressed="true"] small { color: inherit; opacity: .65; }
+  .row2 { display: flex; gap: 8px; align-items: center; margin-top: 10px; flex-wrap: wrap; }
+  .sel { height: 36px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); padding: 0 30px 0 12px; font-size: 14px; font-weight: 500; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238a8078' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
+  .count { margin-left: auto; color: var(--dim); font-size: 13px; }
 
-  .offers { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 215px), 1fr)); }
-  .offer { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; transition: transform .15s, box-shadow .15s; min-width: 0; }
-  .offer:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(0,0,0,.08); }
-  .pic { position: relative; width: 100%; height: 0; padding-top: 100%; overflow: hidden; background: #fff; flex: none; }
-  .pic img { position: absolute; inset: 0; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; padding: 10px; }
-  .pic .ph { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 46px; }
-  .badge { position: absolute; top: 10px; left: 10px; background: var(--brand2); color: #fff; font-weight: 900; font-size: 13px; padding: 3px 9px; border-radius: 999px; }
-  .new { position: absolute; top: 10px; right: 10px; background: var(--ok); color: #fff; font-weight: 800; font-size: 11px; padding: 3px 8px; border-radius: 999px; }
-  .body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
-  .meta { display: flex; justify-content: space-between; gap: 6px; font-size: 12px; color: var(--dim); }
-  .st { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--ink); }
-  .st i { width: 8px; height: 8px; border-radius: 50%; }
-  .offer h3 { font-size: 15px; line-height: 1.35; margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-  .prices { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-top: auto; }
-  .price { font-size: 22px; font-weight: 900; color: var(--brand2); }
-  .old { color: var(--dim); text-decoration: line-through; font-size: 13px; }
-  .cp { display: inline-flex; align-items: center; gap: 6px; border: 1.5px dashed var(--brand); color: var(--brand); background: var(--soft); border-radius: 8px; padding: 3px 8px; font-weight: 800; font-size: 13px; width: fit-content; max-width: 100%; }
-  .cp button { border: 0; background: var(--brand); color: #fff; border-radius: 6px; font-size: 11px; padding: 2px 6px; }
+  /* ── cards ── */
+  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); }
+  @media (max-width: 480px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } }
+  .offer { position: relative; display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; box-shadow: var(--shadow); transition: transform .18s, box-shadow .18s; min-width: 0; }
+  .offer:hover { transform: translateY(-3px); box-shadow: var(--shadow-h); }
+  .pic { position: relative; width: 100%; height: 0; padding-top: 100%; background: #fff; overflow: hidden; flex: none; border-bottom: 1px solid var(--line2); }
+  .pic img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; padding: 14px; transition: transform .3s; }
+  .offer:hover .pic img { transform: scale(1.04); }
+  .pic .ph { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 40px; opacity: .5; }
+  .tag { position: absolute; top: 10px; left: 10px; display: inline-flex; gap: 6px; }
+  .tag span { font: 800 12px var(--body); padding: 4px 8px; border-radius: 8px; }
+  .tag .off { background: var(--hot); color: #fff; }
+  .tag .new { background: #111; color: #fff; }
+  .body { display: flex; flex-direction: column; gap: 8px; padding: 12px 14px 14px; flex: 1; }
+  .meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px; color: var(--dim); }
+  .store { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: var(--ink2); }
+  .store i { width: 8px; height: 8px; border-radius: 50%; }
+  .offer h3 { margin: 0; font: 600 14px/1.4 var(--body); color: var(--ink); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.8em; }
+  .price { margin-top: auto; display: flex; flex-direction: column; }
+  .price s { font-size: 12px; color: var(--dim); }
+  .price b { font: 800 22px/1.1 var(--head); letter-spacing: -.5px; }
+  .price b small { font-size: 13px; font-weight: 700; margin-right: 2px; }
+  .code { display: flex; align-items: center; justify-content: space-between; gap: 6px; border: 1.5px dashed color-mix(in srgb, var(--brand) 60%, transparent); background: var(--soft); border-radius: 10px; padding: 5px 6px 5px 10px; font: 700 12px var(--body); color: var(--brand-ink); }
+  .code button { border: 0; background: var(--brand); color: #fff; border-radius: 7px; padding: 4px 8px; font-size: 11px; font-weight: 700; }
   .acts { display: flex; gap: 6px; }
-  .buy { flex: 1; text-align: center; background: var(--brand); color: #fff; font-weight: 800; padding: 10px; border-radius: 12px; text-decoration: none; }
-  .share { border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 12px; padding: 0 12px; font-size: 16px; }
+  .go { flex: 1; height: 40px; display: inline-flex; align-items: center; justify-content: center; border-radius: 11px; background: var(--brand); color: #fff; font-weight: 700; font-size: 14px; text-decoration: none; transition: background .12s; }
+  .go:hover { background: var(--brand-ink); }
+  .share { width: 40px; height: 40px; flex: none; border-radius: 11px; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; color: var(--ink2); }
+  @media (max-width: 480px) { .body { padding: 10px; gap: 6px; } .price b { font-size: 18px; } .share { display: none; } .go { font-size: 13px; } }
 
-  .coupon .pic { background: linear-gradient(135deg, var(--brand), var(--brand2)); }
-  .coupon .ticket { position: absolute; inset: 16px; border: 2px dashed rgba(255,255,255,.75); border-radius: 14px; display: grid; place-items: center; text-align: center; color: #fff; padding: 10px; }
-  .coupon .ticket b { display: block; font-size: 22px; letter-spacing: 1px; word-break: break-all; }
-  .coupon .ticket span { font-size: 13px; opacity: .9; }
-  .coupon .det { font-size: 13px; color: var(--dim); margin: 0; padding-left: 16px; }
+  /* coupons */
+  .coupon .pic { background: linear-gradient(140deg, #ffae00, var(--brand) 50%, var(--hot)); border: 0; }
+  .ticket { position: absolute; inset: 14px; border: 2px dashed rgba(255,255,255,.7); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; text-align: center; padding: 8px; }
+  .ticket span { font-size: 12px; font-weight: 600; opacity: .9; text-transform: uppercase; letter-spacing: .08em; }
+  .ticket b { font: 800 22px var(--head); letter-spacing: .5px; word-break: break-all; margin-top: 4px; }
+  .det { margin: 0; padding: 0; list-style: none; font-size: 13px; color: var(--ink2); display: grid; gap: 2px; }
+  .det li::before { content: "✓ "; color: var(--ok); font-weight: 700; }
 
-  .more { display: block; margin: 18px auto 0; border: 1px solid var(--line); background: var(--card); color: var(--ink); padding: 10px 22px; border-radius: 999px; font-weight: 700; }
-  .empty { text-align: center; color: var(--dim); padding: 30px 0; grid-column: 1 / -1; }
+  /* skeleton */
+  .sk { background: linear-gradient(90deg, var(--line2), var(--line), var(--line2)); background-size: 200% 100%; animation: sk 1.2s infinite; border-radius: var(--r); aspect-ratio: 3 / 4.4; }
+  @keyframes sk { to { background-position: -200% 0; } }
+  .more { display: flex; margin: 24px auto 0; }
+  .empty { grid-column: 1 / -1; text-align: center; color: var(--dim); padding: 40px 0; }
 
-  .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
-  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px; }
-  .card h3 { margin: 0 0 4px; font-size: 17px; }
-  .card p { margin: 0; color: var(--dim); }
-  .num { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--brand); color: #fff; font-weight: 800; margin-bottom: 8px; }
-  .disclosure { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--brand); border-radius: 12px; padding: 14px 16px; color: var(--dim); font-size: 14px; }
-  footer { text-align: center; color: var(--dim); font-size: 14px; padding: 36px 16px 30px; }
-  .toast { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 999px; font-weight: 700; opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 30; }
-  .toast.on { opacity: 1; }
+  /* how / trust / footer */
+  .how { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); }
+  .how div { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 20px; }
+  .how b { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: var(--soft); color: var(--brand-ink); font: 800 15px var(--head); margin-bottom: 10px; }
+  .how h3 { margin: 0 0 4px; font: 700 16px var(--head); }
+  .how p { margin: 0; color: var(--ink2); font-size: 14px; }
+  .note { margin-top: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px 18px; color: var(--ink2); font-size: 13px; }
+  footer { margin-top: 48px; border-top: 1px solid var(--line); padding: 24px 0 32px; color: var(--dim); font-size: 13px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: center; }
+  footer .logo b { font-size: 15px; color: var(--ink); }
+  .toast { position: fixed; bottom: 22px; left: 50%; transform: translate(-50%, 10px); background: var(--ink); color: var(--surface); padding: 10px 16px; border-radius: 12px; font-weight: 600; font-size: 14px; opacity: 0; transition: .2s; pointer-events: none; z-index: 40; box-shadow: var(--shadow-h); }
+  .toast.on { opacity: 1; transform: translate(-50%, 0); }
+  @media (prefers-reduced-motion: reduce) { *, *::before { animation: none !important; transition: none !important; } }
 </style>
 </head>
 <body>
-  <div class="top"><div class="in">
-    <a class="brand" href="#"><img src="img/logo.png" alt=""><b>Achei Barato</b></a>
-    <label class="q"><span aria-hidden="true">🔎</span><input type="search" id="q" placeholder="Buscar produto, marca ou loja" aria-label="Buscar ofertas"></label>
-    <a class="pill wa" href="grupo/" target="_blank" rel="noopener">💬 <span class="t">WhatsApp</span></a>
-    <a class="pill tg" href="https://t.me/+ThWZ9AB-ux1iNDQ5" target="_blank" rel="noopener">✈️ <span class="t">Telegram</span></a>
-  </div></div>
-
-  <header class="hero"><div class="in">
-    <img src="img/logo.png" alt="Logo Achei Barato" width="92" height="92">
-    <div>
-      <h1>As melhores promoções, todo dia</h1>
-      <p>Amazon, Mercado Livre e Shopee: a gente garimpa o dia inteiro e você só escolhe o que vai levar. Tudo com link direto da loja oficial.</p>
-      <span class="live" id="live" hidden><i></i><span id="liveText"></span></span>
-    </div>
+  <header class="top"><div class="wrap">
+    <a class="logo" href="#"><img src="img/logo.png" alt="Achei Barato"><b>Achei Barato</b></a>
+    <label class="search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="search" id="q" placeholder="Buscar produto, marca ou loja" aria-label="Buscar ofertas" autocomplete="off">
+    </label>
+    <nav class="join" aria-label="Entrar nos grupos">
+      <a class="btn wa" href="grupo/" target="_blank" rel="noopener" title="Grupo no WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.4.6-.3.4c-.1.1-.3.3-.1.6.2.3.8 1.2 1.6 2 1.1 1 2 1.3 2.3 1.4.3.2.5.1.6 0l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2Z"/></svg><span class="t">WhatsApp</span></a>
+      <a class="btn tg" href="https://t.me/+ThWZ9AB-ux1iNDQ5" target="_blank" rel="noopener" title="Grupo no Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.9 4.3 18.6 20c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.2-8.3c.4-.4-.1-.6-.6-.2L6 13.6l-4.9-1.5c-1.1-.3-1.1-1 .2-1.5L20.5 3c.9-.3 1.7.2 1.4 1.3Z"/></svg><span class="t">Telegram</span></a>
+    </nav>
   </div></header>
 
-  <main>
-    <section id="destaques" hidden>
-      <h2>🔥 Maiores descontos de hoje</h2>
-      <p class="sub">As ofertas com mais desconto das últimas 24 horas.</p>
+  <section class="hero"><div class="wrap">
+    <div>
+      <span class="eyebrow"><i></i><span id="live">Ofertas novas o dia inteiro</span></span>
+      <h1>Promoções de verdade,<br><em>garimpadas a dedo.</em></h1>
+      <p class="lead">A gente vasculha Amazon, Mercado Livre e Shopee o dia todo e só publica o que tem desconto real. Você clica e compra direto na loja oficial.</p>
+      <div class="cta">
+        <a class="btn wa" href="grupo/" target="_blank" rel="noopener">Receber no WhatsApp</a>
+        <a class="btn ghost" href="#ofertas">Ver ofertas ↓</a>
+      </div>
+      <div class="stats" id="stats" hidden>
+        <div><b id="sToday">–</b><span>ofertas nas últimas 24h</span></div>
+        <div><b id="sTop">–</b><span>maior desconto de hoje</span></div>
+        <div><b>3</b><span>lojas oficiais</span></div>
+      </div>
+    </div>
+    <aside class="spot" id="spot" hidden><div class="label" id="spotLabel">⚡ Maior desconto de hoje</div></aside>
+  </div></section>
+
+  <main class="wrap">
+    <section class="block" id="destaques" hidden>
+      <div class="head"><div><h2>🔥 Maiores descontos de hoje</h2><p>As ofertas mais baratas em relação ao preço de antes, nas últimas 24 horas.</p></div>
+        <div class="arrows"><button type="button" data-rail="topRail" data-dir="-1" aria-label="Anterior">‹</button><button type="button" data-rail="topRail" data-dir="1" aria-label="Próximo">›</button></div></div>
       <div class="rail" id="topRail"></div>
     </section>
 
-    <section id="cupons" hidden>
-      <h2>🎟️ Cupons ativos</h2>
-      <p class="sub">Copie o código e use na loja pelo nosso link. Cupons acabam rápido!</p>
+    <section class="block" id="cupons" hidden>
+      <div class="head"><div><h2>🎟️ Cupons ativos</h2><p>Copie o código e use na loja pelo nosso link. Cupom acaba rápido!</p></div>
+        <div class="arrows"><button type="button" data-rail="couponRail" data-dir="-1" aria-label="Anterior">‹</button><button type="button" data-rail="couponRail" data-dir="1" aria-label="Próximo">›</button></div></div>
       <div class="rail" id="couponRail"></div>
     </section>
 
-    <section id="ofertas" hidden>
-      <h2>Todas as ofertas</h2>
-      <p class="sub" id="atualizado"></p>
-      <div class="chips" id="cats" role="toolbar" aria-label="Categorias"></div>
-      <div class="bar">
-        <select class="sel" id="loja" aria-label="Loja"><option value="">Todas as lojas</option><option value="amazon">Amazon</option><option value="mercadolivre">Mercado Livre</option><option value="shopee">Shopee</option></select>
-        <select class="sel" id="faixa" aria-label="Faixa de preço"><option value="">Qualquer preço</option><option value="0-100">Até R$ 100</option><option value="100-500">R$ 100 a 500</option><option value="500-1500">R$ 500 a 1.500</option><option value="1500-">Acima de R$ 1.500</option></select>
-        <select class="sel" id="ordem" aria-label="Ordenar"><option value="recentes">Mais recentes</option><option value="desconto">Maior desconto</option><option value="menor">Menor preço</option><option value="maior">Maior preço</option></select>
-        <span class="count" id="count"></span>
+    <section class="block" id="ofertas">
+      <div class="head"><div><h2>Todas as ofertas</h2><p id="atualizado">Carregando as ofertas…</p></div></div>
+      <div class="filters">
+        <div class="chips" id="cats" role="toolbar" aria-label="Categorias"></div>
+        <div class="row2">
+          <select class="sel" id="loja" aria-label="Loja"><option value="">Todas as lojas</option><option value="amazon">Amazon</option><option value="mercadolivre">Mercado Livre</option><option value="shopee">Shopee</option></select>
+          <select class="sel" id="faixa" aria-label="Faixa de preço"><option value="">Qualquer preço</option><option value="0-100">Até R$ 100</option><option value="100-500">R$ 100 a 500</option><option value="500-1500">R$ 500 a 1.500</option><option value="1500-">Acima de R$ 1.500</option></select>
+          <select class="sel" id="ordem" aria-label="Ordenar"><option value="recentes">Mais recentes</option><option value="desconto">Maior desconto</option><option value="menor">Menor preço</option><option value="maior">Maior preço</option></select>
+          <span class="count" id="count"></span>
+        </div>
       </div>
-      <div class="offers" id="lista"></div>
-      <button class="more" id="more" type="button" hidden>Ver mais ofertas</button>
+      <div class="grid" id="lista" aria-live="polite"></div>
+      <button class="btn ghost more" id="more" type="button" hidden>Ver mais ofertas</button>
     </section>
 
-    <section>
-      <h2>Como funciona</h2>
-      <div class="grid">
-        <div class="card"><span class="num">1</span><h3>A gente garimpa</h3><p>Acompanhamos as lojas o dia inteiro e separamos só as promoções que valem a pena: com desconto de verdade e sem anúncio duvidoso.</p></div>
-        <div class="card"><span class="num">2</span><h3>Você recebe no grupo</h3><p>As ofertas chegam no WhatsApp e no Telegram com foto, preço e o link direto do produto. E ficam todas aqui no site.</p></div>
-        <div class="card"><span class="num">3</span><h3>Compra na loja oficial</h3><p>O link leva direto para a página do produto na loja. A compra, a entrega e a garantia são da própria loja.</p></div>
+    <section class="block">
+      <div class="head"><div><h2>Como funciona</h2></div></div>
+      <div class="how">
+        <div><b>1</b><h3>A gente garimpa</h3><p>Acompanhamos as lojas o dia inteiro e filtramos: desconto real, nada de anúncio duvidoso nem preço inflado.</p></div>
+        <div><b>2</b><h3>Você recebe onde preferir</h3><p>No grupo do WhatsApp, no Telegram ou aqui no site, sempre com foto, preço e link direto do produto.</p></div>
+        <div><b>3</b><h3>Compra na loja oficial</h3><p>O link abre a página do produto na própria loja. Pagamento, entrega e garantia são com ela.</p></div>
       </div>
-    </section>
-
-    <section>
-      <h2>Transparência</h2>
-      <p class="disclosure">O Achei Barato participa de programas de afiliados, como o Amazon Associados, o Programa de Afiliados do Mercado Livre e o Shopee Afiliados. Quando você compra por um dos nossos links, podemos receber uma comissão da loja, <strong>sem nenhum custo extra para você</strong>. Os preços e a disponibilidade podem mudar a qualquer momento; confira sempre o valor final na página da loja antes de comprar.</p>
+      <p class="note"><strong>Transparência:</strong> o Achei Barato participa de programas de afiliados (Amazon Associados, Afiliados Mercado Livre e Shopee Afiliados). Quando você compra por um dos nossos links, podemos receber uma comissão da loja, <strong>sem nenhum custo extra para você</strong>. Preços e disponibilidade mudam a todo momento; confira o valor final na loja antes de comprar.</p>
     </section>
   </main>
 
-  <footer>
-    <p>© 2026 Achei Barato · <a href="privacidade.html">Política de privacidade</a></p>
-  </footer>
+  <footer><div class="wrap">
+    <a class="logo" href="#"><img src="img/logo.png" alt="" width="28" height="28" style="width:28px;height:28px"><b>Achei Barato</b></a>
+    <span>© 2026 Achei Barato · <a href="privacidade.html">Política de privacidade</a></span>
+  </div></footer>
   <div class="toast" id="toast" role="status"></div>
 
 <script>
@@ -175,57 +256,56 @@
   const STORE = { amazon: ['Amazon', 'var(--amazon)'], mercadolivre: ['Mercado Livre', 'var(--ml)'], shopee: ['Shopee', 'var(--shopee)'] }
   // Same categories as the bot (src/offer/categories.ts).
   const CATS = [
-    ['eletronicos', '📱', 'Eletrônicos'], ['eletrodomesticos', '🏠', 'Eletrodomésticos'], ['casa', '🍳', 'Casa e cozinha'], ['cama', '🛏️', 'Cama, mesa e banho'],
+    ['eletronicos', '📱', 'Eletrônicos'], ['eletrodomesticos', '🏠', 'Eletrodomésticos'], ['casa', '🍳', 'Casa e cozinha'], ['cama', '🛏️', 'Cama e banho'],
     ['moda', '👕', 'Moda'], ['calcados', '👟', 'Calçados'], ['acessorios', '⌚', 'Acessórios'], ['beleza', '💄', 'Beleza'], ['games', '🎮', 'Games'],
-    ['infantil', '🧸', 'Infantil'], ['ferramentas', '🔧', 'Ferramentas'], ['esporte', '🏋️', 'Esporte e saúde'], ['mercado', '🛒', 'Mercado e bebidas'], ['outros', '🛍️', 'Outros'],
+    ['infantil', '🧸', 'Infantil'], ['ferramentas', '🔧', 'Ferramentas'], ['esporte', '🏋️', 'Esporte e saúde'], ['mercado', '🛒', 'Mercado'], ['outros', '🛍️', 'Outros'],
   ]
   const PAGE = 24
   const LINK_OK = /^https:\/\/([a-z0-9-]+\.)*(amazon\.com\.br|mercadolivre\.com\.br|shopee\.com\.br|meli\.la)\//
   const $ = (id) => document.getElementById(id)
   const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e }
-  const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: Number.isInteger(v) ? 0 : 2 })
   const fold = (s) => (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
   const off = (o) => (o.oldPrice && o.price && o.oldPrice > o.price ? Math.round((1 - o.price / o.oldPrice) * 100) : 0)
+  const money = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
   const ago = (ms) => {
     const m = Math.max(1, Math.round((Date.now() - ms) / 60000))
     if (m < 60) return `há ${m} min`
     const h = Math.round(m / 60)
-    return h < 24 ? `há ${h}h` : `há ${Math.round(h / 24)} dia${h >= 36 ? 's' : ''}`
-  }
-  const toast = (t) => { const e = $('toast'); e.textContent = t; e.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => e.classList.remove('on'), 1800) }
-  const copy = async (code) => { try { await navigator.clipboard.writeText(code); toast(`Cupom ${code} copiado!`) } catch { toast(`Cupom: ${code}`) } }
-  const share = async (o) => {
-    const text = `${o.title}${o.price ? ` por ${brl(o.price)}` : ''} 👉 ${o.link}`
-    if (navigator.share) { try { await navigator.share({ title: o.title, text }) } catch {} } else window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener')
+    return h < 24 ? `há ${h} h` : `há ${Math.round(h / 24)} d`
   }
   const storeName = (o) => (STORE[o.store] || ['Loja'])[0]
+  const toast = (t) => { const e = $('toast'); e.textContent = t; e.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => e.classList.remove('on'), 1800) }
+  const copy = async (code) => { try { await navigator.clipboard.writeText(code); toast(`Cupom ${code} copiado ✓`) } catch { toast(`Cupom: ${code}`) } }
+  const share = async (o) => {
+    const text = `${o.title}${o.price ? ` por R$ ${money(o.price)}` : ''} 👉 ${o.link}`
+    if (navigator.share) { try { await navigator.share({ title: o.title, text }) } catch {} } else window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener')
+  }
+  const svgShare = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="m16 6-4-4-4 4"/><path d="M12 2v14"/></svg>'
 
-  function storeTag(o) {
-    const meta = el('div', 'meta')
-    const st = el('span', 'st'); const dot = el('i'); dot.style.background = (STORE[o.store] || [])[1] || 'var(--dim)'
-    st.append(dot, storeName(o)); meta.append(st, el('span', '', ago(o.at)))
-    return meta
+  function meta(o) {
+    const m = el('div', 'meta'); const s = el('span', 'store'); const dot = el('i'); dot.style.background = (STORE[o.store] || [])[1] || 'var(--dim)'
+    s.append(dot, storeName(o)); m.append(s, el('span', '', ago(o.at))); return m
   }
 
   function offerCard(o) {
     const card = el('article', 'offer')
     const pic = el('div', 'pic')
-    if (o.image && /^https:\/\//.test(o.image)) { const img = el('img'); img.src = o.image; img.alt = ''; img.loading = 'lazy'; pic.append(img) } else pic.append(el('span', 'ph', '🛍️'))
+    if (o.image && /^https:\/\//.test(o.image)) { const img = el('img'); img.src = o.image; img.alt = o.title; img.loading = 'lazy'; img.decoding = 'async'; pic.append(img) } else pic.append(el('span', 'ph', '🛍️'))
     const d = off(o)
-    if (d >= 5) pic.append(el('span', 'badge', `-${d}%`))
-    if (Date.now() - o.at < 3600e3) pic.append(el('span', 'new', '🆕 agora'))
+    const tag = el('div', 'tag')
+    if (d >= 5) tag.append(el('span', 'off', `-${d}%`))
+    if (Date.now() - o.at < 3600e3) tag.append(el('span', 'new', 'NOVO'))
+    if (tag.childElementCount) pic.append(tag)
     const body = el('div', 'body')
-    body.append(storeTag(o), el('h3', '', o.title))
-    if (o.coupon) {
-      const cp = el('div', 'cp', `🎟️ ${o.coupon}`); const b = el('button', '', 'copiar'); b.type = 'button'; b.onclick = () => copy(o.coupon); cp.append(b); body.append(cp)
-    }
-    const prices = el('div', 'prices')
-    if (o.price) prices.append(el('span', 'price', brl(o.price)))
-    if (d) prices.append(el('span', 'old', brl(o.oldPrice)))
-    body.append(prices)
+    body.append(meta(o), el('h3', '', o.title))
+    if (o.coupon) { const c = el('div', 'code', `🎟️ ${o.coupon}`); const b = el('button', '', 'Copiar'); b.type = 'button'; b.onclick = () => copy(o.coupon); c.append(b); body.append(c) }
+    const price = el('div', 'price')
+    if (d) price.append(el('s', '', `R$ ${money(o.oldPrice)}`))
+    if (o.price) { const b = el('b'); b.append(el('small', '', 'R$'), money(o.price)); price.append(b) }
+    body.append(price)
     const acts = el('div', 'acts')
-    const a = el('a', 'buy', `Ver ${o.store === 'mercadolivre' ? 'no' : 'na'} ${storeName(o)}`); a.href = o.link; a.target = '_blank'; a.rel = 'nofollow sponsored noopener'
-    const sh = el('button', 'share', '↗'); sh.type = 'button'; sh.title = 'Compartilhar'; sh.setAttribute('aria-label', 'Compartilhar'); sh.onclick = () => share(o)
+    const a = el('a', 'go', 'Ver oferta'); a.title = `Abrir ${o.store === 'mercadolivre' ? 'no' : 'na'} ${storeName(o)}`; a.href = o.link; a.target = '_blank'; a.rel = 'nofollow sponsored noopener'
+    const sh = el('button', 'share'); sh.type = 'button'; sh.title = 'Compartilhar'; sh.setAttribute('aria-label', 'Compartilhar oferta'); sh.innerHTML = svgShare; sh.onclick = () => share(o)
     acts.append(a, sh); body.append(acts)
     card.append(pic, body)
     return card
@@ -233,24 +313,23 @@
 
   function couponCard(o) {
     const card = el('article', 'offer coupon')
-    const pic = el('div', 'pic'); const t = el('div', 'ticket'); const inner = el('div')
-    inner.append(el('span', '', `Cupom ${storeName(o)}`), el('b', '', o.coupon || ''))
-    t.append(inner); pic.append(t)
-    const body = el('div', 'body'); body.append(storeTag(o))
+    const pic = el('div', 'pic'); const t = el('div', 'ticket')
+    t.append(el('span', '', `Cupom ${storeName(o)}`), el('b', '', o.coupon || '')); pic.append(t)
+    const body = el('div', 'body'); body.append(meta(o))
     if (o.details && o.details.length) { const ul = el('ul', 'det'); for (const x of o.details.slice(0, 3)) ul.append(el('li', '', x)); body.append(ul) }
-    const acts = el('div', 'acts')
-    const b = el('a', 'buy', 'Copiar e ir para a loja'); b.href = o.link; b.target = '_blank'; b.rel = 'nofollow sponsored noopener'; b.onclick = () => copy(o.coupon)
-    acts.append(b); body.append(acts)
-    card.append(pic, body)
+    const acts = el('div', 'acts'); acts.style.marginTop = 'auto'
+    const b = el('a', 'go', 'Copiar e ir para a loja'); b.href = o.link; b.target = '_blank'; b.rel = 'nofollow sponsored noopener'; b.onclick = () => copy(o.coupon)
+    acts.append(b); body.append(acts); card.append(pic, body)
     return card
   }
 
   let all = [], shown = PAGE, cat = ''
+  const offersOnly = () => all.filter((o) => o.kind !== 'cupom')
   function filtered() {
     const q = fold($('q').value.trim()).split(/\s+/).filter(Boolean)
     const loja = $('loja').value
     const [min, max] = ($('faixa').value || '-').split('-').map((x) => (x ? Number(x) : null))
-    let list = all.filter((o) => o.kind !== 'cupom')
+    let list = offersOnly()
       .filter((o) => !cat || (o.cats || ['outros']).includes(cat))
       .filter((o) => !loja || o.store === loja)
       .filter((o) => (min === null || (o.price || 0) >= min) && (max === null || (o.price || 0) < max))
@@ -262,44 +341,48 @@
     return list
   }
   function render() {
-    const list = filtered()
-    const box = $('lista'); box.replaceChildren()
-    for (const o of list.slice(0, shown)) box.append(offerCard(o))
-    if (!list.length) box.append(el('p', 'empty', 'Nenhuma oferta com esses filtros agora. Tente outra busca ou categoria.'))
+    const list = filtered(), box = $('lista')
+    box.replaceChildren(...list.slice(0, shown).map(offerCard))
+    if (!list.length) box.append(el('p', 'empty', 'Nenhuma oferta com esses filtros agora. Tente outra busca ou categoria 🙂'))
     $('count').textContent = `${list.length} oferta${list.length === 1 ? '' : 's'}`
     $('more').hidden = list.length <= shown
   }
   function renderCats() {
-    const offers = all.filter((o) => o.kind !== 'cupom')
-    const n = (id) => offers.filter((o) => (o.cats || ['outros']).includes(id)).length
+    const offers = offersOnly(), n = (id) => offers.filter((o) => (o.cats || ['outros']).includes(id)).length
     const box = $('cats'); box.replaceChildren()
-    const chip = (id, label, count) => { const b = el('button', 'chip' + (cat === id ? ' on' : ''), label); b.type = 'button'; b.append(el('small', '', String(count))); b.onclick = () => { cat = id; shown = PAGE; renderCats(); render() }; box.append(b) }
+    const chip = (id, label, count) => {
+      const b = el('button', 'chip', label); b.type = 'button'; b.setAttribute('aria-pressed', String(cat === id)); b.append(el('small', '', String(count)))
+      b.onclick = () => { cat = id; shown = PAGE; renderCats(); render() }; box.append(b)
+    }
     chip('', 'Todas', offers.length)
     for (const [id, emoji, name] of CATS) { const c = n(id); if (c) chip(id, `${emoji} ${name}`, c) }
   }
 
+  // skeleton while loading
+  $('lista').replaceChildren(...Array.from({ length: 8 }, () => el('div', 'sk')))
+
   fetch('ofertas.json?' + Date.now()).then((r) => (r.ok ? r.json() : null)).then((data) => {
     all = ((data && data.ofertas) || []).filter((o) => LINK_OK.test(o.link || ''))
-    if (!all.length) return
-    const offersDay = all.filter((o) => o.kind !== 'cupom' && Date.now() - o.at < 86400e3)
-    $('liveText').textContent = `${offersDay.length} ofertas nas últimas 24h · a mais recente ${ago(all[0].at)}`
-    $('live').hidden = false
-
-    const top = offersDay.filter((o) => off(o) >= 20).sort((a, b) => off(b) - off(a)).slice(0, 10)
-    if (top.length >= 2) { for (const o of top) $('topRail').append(offerCard(o)); $('destaques').hidden = false }
-
+    if (!all.length) { $('lista').replaceChildren(el('p', 'empty', 'As ofertas de hoje já já aparecem aqui.')); return }
+    const day = offersOnly().filter((o) => Date.now() - o.at < 86400e3)
+    const top = [...day].filter((o) => off(o) >= 20).sort((a, b) => off(b) - off(a))
+    $('live').textContent = `Nova oferta ${ago(all[0].at)}`
+    $('sToday').textContent = String(day.length)
+    $('sTop').textContent = top[0] ? `-${off(top[0])}%` : '–'
+    $('stats').hidden = false
+    if (top[0]) { if (Date.now() - top[0].at < 2 * 3600e3) $('spotLabel').textContent = '⚡ Oferta do momento'; $('spot').append(offerCard(top[0])); $('spot').hidden = false }
+    if (top.length >= 3) { $('topRail').append(...top.slice(1, 11).map(offerCard)); $('destaques').hidden = false }
     const cupons = all.filter((o) => o.kind === 'cupom' && Date.now() - o.at < 2 * 86400e3).slice(0, 10)
-    if (cupons.length) { for (const o of cupons) $('couponRail').append(couponCard(o)); $('cupons').hidden = false }
-
+    if (cupons.length) { $('couponRail').append(...cupons.map(couponCard)); $('cupons').hidden = false }
     $('atualizado').textContent = `Atualizado ${ago(Date.parse(data.atualizado))}. Preços podem mudar: confira sempre na loja.`
-    $('ofertas').hidden = false
     renderCats(); render()
-  }).catch(() => {})
+  }).catch(() => $('lista').replaceChildren(el('p', 'empty', 'Não deu para carregar as ofertas agora. Tente de novo em instantes.')))
 
   let t
-  $('q').addEventListener('input', () => { clearTimeout(t); t = setTimeout(() => { shown = PAGE; render(); if ($('q').value) $('ofertas').scrollIntoView({ block: 'start' }) }, 250) })
+  $('q').addEventListener('input', () => { clearTimeout(t); t = setTimeout(() => { shown = PAGE; render(); if ($('q').value.trim()) $('ofertas').scrollIntoView({ block: 'start' }) }, 250) })
   for (const id of ['loja', 'faixa', 'ordem']) $(id).onchange = () => { shown = PAGE; render() }
   $('more').onclick = () => { shown += PAGE; render() }
+  document.querySelectorAll('[data-rail]').forEach((b) => (b.onclick = () => $(b.dataset.rail).scrollBy({ left: Number(b.dataset.dir) * 500, behavior: 'smooth' })))
 </script>
 </body>
 </html>
