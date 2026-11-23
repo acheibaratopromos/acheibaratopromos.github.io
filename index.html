@@ -200,7 +200,7 @@
         <a class="btn ghost hide-sm" href="#ofertas">Ver ofertas ↓</a>
       </div>
       <div class="stats" id="stats" hidden>
-        <div><b id="sToday">–</b><span>ofertas nas últimas 24h</span></div>
+        <div><b id="sToday">–</b><span>ofertas hoje</span></div>
         <div><b id="sTop">–</b><span>maior desconto de hoje</span></div>
         <div><b>3</b><span>lojas oficiais</span></div>
       </div>
@@ -210,7 +210,7 @@
 
   <main class="wrap">
     <section class="block" id="destaques" hidden>
-      <div class="head"><div><h2>🔥 Maiores descontos de hoje</h2><p>As ofertas mais baratas em relação ao preço de antes, nas últimas 24 horas.</p></div>
+      <div class="head"><div><h2>🔥 Maiores descontos de hoje</h2><p>As ofertas mais baratas em relação ao preço de antes, publicadas hoje.</p></div>
         <div class="arrows"><button type="button" data-rail="topRail" data-dir="-1" aria-label="Anterior">‹</button><button type="button" data-rail="topRail" data-dir="1" aria-label="Próximo">›</button></div></div>
       <div class="rail" id="topRail"></div>
     </section>
@@ -366,7 +366,9 @@
   fetch('ofertas.json?' + Date.now()).then((r) => (r.ok ? r.json() : null)).then((data) => {
     all = ((data && data.ofertas) || []).filter((o) => LINK_OK.test(o.link || ''))
     if (!all.length) { $('lista').replaceChildren(el('p', 'empty', 'As ofertas de hoje já já aparecem aqui.')); return }
-    const day = offersOnly().filter((o) => Date.now() - o.at < 86400e3)
+    // "Hoje" = since midnight (23/11: offers from last night still showed up as today's).
+    const midnight = new Date().setHours(0, 0, 0, 0)
+    const day = offersOnly().filter((o) => o.at >= midnight)
     const top = [...day].filter((o) => off(o) >= 20).sort((a, b) => off(b) - off(a))
     $('live').textContent = `Nova oferta ${ago(all[0].at)}`
     $('sToday').textContent = String(day.length)
